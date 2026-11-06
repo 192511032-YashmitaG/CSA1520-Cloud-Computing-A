@@ -1,0 +1,9 @@
+PASS | health             | HTTP 200 (expected 200) | {'status': 'healthy', 'service': 'University Student Records API', 'timestamp': '2026-11-05T18:14:05.201991+00:00'}
+PASS | student list       | HTTP 200 (expected 200) | {'count': 4, 'students': [{'id': 1, 'register_number': '192511001', 'name': 'Aarav Kumar', 'department': 'CSE', 'year': 3}, {'id': 2, 'register_number': '192511002', 'name': 'Meera Sharma', 'department': 'CSE', 'year': 3}, {'id': 3, 'register_number': '192511003', 'name': 'Rohan Patel', 'department': 'IT', 'year': 2}, {'id': 4, 'register_number': '192511004', 'name': 'Ananya Das', 'department': 'ECE', 'year': 4}]}
+PASS | existing student   | HTTP 200 (expected 200) | {'id': 1, 'register_number': '192511001', 'name': 'Aarav Kumar', 'department': 'CSE', 'year': 3}
+PASS | missing student    | HTTP 404 (expected 404) | {'error': 'Student not found', 'student_id': 999}
+
+Concurrent request test: 100 GET requests using 10 workers
+Requests: 100 | Successful: 100 | Failed: 0 | Elapsed: 1.087s | Throughput: 92.0 req/s
+
+RESULT: ALL TESTS PASSED
