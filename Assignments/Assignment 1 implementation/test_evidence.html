@@ -1,0 +1,17 @@
+<!doctype html><html><head><meta charset="utf-8"><style>body{font:15px Arial;background:#f2f5fa;color:#17243a;margin:40px}.card{background:white;padding:24px;border-radius:14px;max-width:1100px;margin:20px auto}h1{color:#153e70}pre{background:#101b2e;color:#d8e8ff;padding:20px;border-radius:10px;white-space:pre-wrap;font:13px/1.55 Consolas,monospace}.ok{color:#087747;font-weight:bold}</style></head><body><div class="card"><h1>University Cloud POC — Test Evidence</h1><p class="ok">Actual local API execution · functional tests · concurrent request test</p><h2>Functional and load test output</h2><pre>PASS | health             | HTTP 200 (expected 200) | {&#x27;status&#x27;: &#x27;healthy&#x27;, &#x27;service&#x27;: &#x27;University Student Records API&#x27;, &#x27;timestamp&#x27;: &#x27;2026-11-05T18:14:05.201991+00:00&#x27;}
+PASS | student list       | HTTP 200 (expected 200) | {&#x27;count&#x27;: 4, &#x27;students&#x27;: [{&#x27;id&#x27;: 1, &#x27;register_number&#x27;: &#x27;192511001&#x27;, &#x27;name&#x27;: &#x27;Aarav Kumar&#x27;, &#x27;department&#x27;: &#x27;CSE&#x27;, &#x27;year&#x27;: 3}, {&#x27;id&#x27;: 2, &#x27;register_number&#x27;: &#x27;192511002&#x27;, &#x27;name&#x27;: &#x27;Meera Sharma&#x27;, &#x27;department&#x27;: &#x27;CSE&#x27;, &#x27;year&#x27;: 3}, {&#x27;id&#x27;: 3, &#x27;register_number&#x27;: &#x27;192511003&#x27;, &#x27;name&#x27;: &#x27;Rohan Patel&#x27;, &#x27;department&#x27;: &#x27;IT&#x27;, &#x27;year&#x27;: 2}, {&#x27;id&#x27;: 4, &#x27;register_number&#x27;: &#x27;192511004&#x27;, &#x27;name&#x27;: &#x27;Ananya Das&#x27;, &#x27;department&#x27;: &#x27;ECE&#x27;, &#x27;year&#x27;: 4}]}
+PASS | existing student   | HTTP 200 (expected 200) | {&#x27;id&#x27;: 1, &#x27;register_number&#x27;: &#x27;192511001&#x27;, &#x27;name&#x27;: &#x27;Aarav Kumar&#x27;, &#x27;department&#x27;: &#x27;CSE&#x27;, &#x27;year&#x27;: 3}
+PASS | missing student    | HTTP 404 (expected 404) | {&#x27;error&#x27;: &#x27;Student not found&#x27;, &#x27;student_id&#x27;: 999}
+
+Concurrent request test: 100 GET requests using 10 workers
+Requests: 100 | Successful: 100 | Failed: 0 | Elapsed: 1.087s | Throughput: 92.0 req/s
+
+RESULT: ALL TESTS PASSED
+</pre><h2>Resource metrics captured from running API process</h2><pre>{
+  &quot;process_id&quot;: 511,
+  &quot;uptime_seconds&quot;: 2.83,
+  &quot;requests_served&quot;: 106,
+  &quot;max_resident_memory_mb&quot;: 94.1,
+  &quot;cpu_time_seconds&quot;: 1.6372,
+  &quot;resource_limit_note&quot;: &quot;Local process metrics; use docker stats after container deployment for container-level CPU and memory usage.&quot;
+}</pre><p>Note: local process monitoring, not Docker container statistics.</p></div></body></html>

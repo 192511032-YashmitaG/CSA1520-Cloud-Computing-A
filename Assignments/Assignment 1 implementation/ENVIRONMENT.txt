@@ -1,0 +1,6 @@
+Execution environment: Python 3.11
+API server: executed locally on 127.0.0.1:5000
+Functional tests: 4/4 passed (health, list, record lookup, missing-record HTTP 404)
+Concurrent request test: 100/100 successful requests, 10 worker threads
+Resource evidence: process-level metrics returned by /metrics
+Docker Engine: not installed in this execution environment; container build/run was not performed here.
