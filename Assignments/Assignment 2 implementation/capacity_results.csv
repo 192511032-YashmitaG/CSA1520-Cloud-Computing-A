@@ -1,0 +1,5 @@
+memory_overcommit_ratio,usable_ram_gb,average_vm_memory_gb,theoretical_vm_count,network_nominal_gbps,network_planning_gbps
+1:1,480,8,60,50,40.0
+1:2,480,8,120,50,40.0
+1:4,480,8,240,50,40.0
+1:8,480,8,480,50,40.0

@@ -1,0 +1,52 @@
+{
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "system": "Linux",
+  "machine": "x86_64",
+  "python": "3.13.5",
+  "devices": {
+    "/dev/kvm": {
+      "exists": false,
+      "readable": false,
+      "writable": false
+    },
+    "docker_socket_exists": false
+  },
+  "tools": {
+    "docker": {
+      "available": false,
+      "path": null,
+      "version": null
+    },
+    "podman": {
+      "available": false,
+      "path": null,
+      "version": null
+    },
+    "virsh": {
+      "available": false,
+      "path": null,
+      "version": null
+    },
+    "qemu-system-x86_64": {
+      "available": false,
+      "path": null,
+      "version": null
+    },
+    "kata-runtime": {
+      "available": false,
+      "path": null,
+      "version": null
+    },
+    "containerd": {
+      "available": false,
+      "path": null,
+      "version": null
+    },
+    "kubectl": {
+      "available": false,
+      "path": null,
+      "version": null
+    }
+  },
+  "limitation": "Presence checks do not prove that a runtime is configured or functional."
+}

@@ -1,0 +1,33 @@
+{
+  "scenario": "University private cloud capacity planning",
+  "host": {
+    "cpu_cores": 64,
+    "ram_gb": 512,
+    "host_reserved_ram_gb": 32,
+    "nic_count": 2,
+    "nic_speed_gbps_each": 25,
+    "network_planning_utilization": 0.8
+  },
+  "workload": {
+    "average_vm_memory_gb": 8,
+    "vm_exit_cost_us": 1.5,
+    "native_syscall_cost_us": 0.2,
+    "maximum_acceptable_degradation_percent": 10
+  },
+  "memory_overcommit_ratios": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "illustrative_cpu_overhead_percent": {
+    "KVM/QEMU": 5,
+    "Docker": 2,
+    "Kata Containers": 8
+  },
+  "notes": [
+    "CPU overhead values are illustrative assumptions, not measured results.",
+    "VM counts are theoretical memory-based limits.",
+    "Network planning capacity applies the stated utilization target."
+  ]
+}

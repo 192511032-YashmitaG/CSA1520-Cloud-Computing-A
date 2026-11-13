@@ -1,0 +1,22 @@
+services:
+  tenant-a-web:
+    image: nginx:alpine
+    container_name: educloud-tenant-a
+    restart: unless-stopped
+    networks: [tenant_a_net]
+    labels:
+      educloud.tenant: tenant-a
+  tenant-b-web:
+    image: nginx:alpine
+    container_name: educloud-tenant-b
+    restart: unless-stopped
+    networks: [tenant_b_net]
+    labels:
+      educloud.tenant: tenant-b
+networks:
+  tenant_a_net:
+    name: educloud_tenant_a_net
+    driver: bridge
+  tenant_b_net:
+    name: educloud_tenant_b_net
+    driver: bridge
