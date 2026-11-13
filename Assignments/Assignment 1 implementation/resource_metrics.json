@@ -1,0 +1,8 @@
+{
+  "process_id": 511,
+  "uptime_seconds": 2.83,
+  "requests_served": 106,
+  "max_resident_memory_mb": 94.1,
+  "cpu_time_seconds": 1.6372,
+  "resource_limit_note": "Local process metrics; use docker stats after container deployment for container-level CPU and memory usage."
+}
