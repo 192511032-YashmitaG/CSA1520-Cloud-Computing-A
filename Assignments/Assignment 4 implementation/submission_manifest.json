@@ -1,0 +1,34 @@
+{
+  "assignment": "CO4 Assignment 4 Part II \u2013 Big Data Engineering",
+  "tasks_included": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "report": "/mnt/data/CO4B_Assignment4_PartII/CO4_B_Assignment_4_Part_II_Answers.docx",
+  "implementation_zip": "/mnt/data/CO4_B_Assignment_4_Part_II_Implementation.zip",
+  "dataset_rows_task5": 5000000,
+  "beneficiary_rows_task3": 1500,
+  "evidence_images": [
+    "task1_batch_pipeline.png",
+    "task1_execution.png",
+    "task2_execution.png",
+    "task2_stream.png",
+    "task3_execution.png",
+    "task4_execution.png",
+    "task4_quality_flow.png",
+    "task5_execution.png",
+    "task5_storage_size.png",
+    "task6_execution.png",
+    "task6_growth.png"
+  ],
+  "notes": [
+    "Synthetic data only",
+    "Single-machine reference implementation",
+    "NPZ columnar format used because Parquet engine unavailable",
+    "Naive growth values above measured subset are extrapolations"
+  ]
+}

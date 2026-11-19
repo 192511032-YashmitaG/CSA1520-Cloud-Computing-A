@@ -1,0 +1,86 @@
+{
+  "dataset_rows": 600000,
+  "metrics": {
+    "read": 600000,
+    "accepted": 599200,
+    "rejected": 800,
+    "reducers": 8,
+    "records_per_reducer": {
+      "0": 74991,
+      "1": 74768,
+      "2": 74989,
+      "3": 74591,
+      "4": 74912,
+      "5": 74868,
+      "6": 74666,
+      "7": 75415
+    },
+    "map_groups": 67189,
+    "shuffle_groups": 67189,
+    "shuffle_estimated_bytes": 2150048
+  },
+  "timing": {
+    "runs_seconds": [
+      0.1546,
+      0.1054,
+      0.0909
+    ],
+    "mean_seconds": 0.1169,
+    "stdev_seconds": 0.0334
+  },
+  "single_process_crosscheck": "first 20,000 records: grouped reference matched distributed-style reducer output for all keys",
+  "stage_observation": {
+    "map_seconds_estimate": 0.0526,
+    "shuffle_seconds_estimate": 0.0292,
+    "reduce_seconds_estimate": 0.0351
+  },
+  "scale_runs": [
+    {
+      "rows": 100000,
+      "predicted": "shuffle groups and runtime rise approximately with input size",
+      "observed": "run on same map/reduce routine",
+      "measured": {
+        "runs_seconds": [
+          0.0292,
+          0.0293,
+          0.0295
+        ],
+        "mean_seconds": 0.0294,
+        "stdev_seconds": 0.0002
+      }
+    },
+    {
+      "rows": 300000,
+      "predicted": "same dominant aggregation stage; near-linear runtime",
+      "observed": "run on same map/reduce routine",
+      "measured": {
+        "runs_seconds": [
+          0.0565,
+          0.0524,
+          0.0577
+        ],
+        "mean_seconds": 0.0555,
+        "stdev_seconds": 0.0028
+      }
+    },
+    {
+      "rows": 600000,
+      "predicted": "same dominant aggregation stage; shuffle approximately doubles vs 300k",
+      "observed": "run on same map/reduce routine",
+      "measured": {
+        "runs_seconds": [
+          0.0857,
+          0.1008,
+          0.0976
+        ],
+        "mean_seconds": 0.0947,
+        "stdev_seconds": 0.0079
+      }
+    }
+  ],
+  "boundary_test": {
+    "case": "single-record segment-hour plus empty reducer partition",
+    "expected": "single row average equals its speed; empty reducer emits no row and does not divide by zero",
+    "observed": "single-row average preserved; empty reducer key absent; no divide-by-zero"
+  }
+}

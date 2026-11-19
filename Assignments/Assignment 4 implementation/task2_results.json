@@ -1,0 +1,59 @@
+{
+  "normal": {
+    "batch": {
+      "('R1', '10:00')": 50.0,
+      "('R2', '10:01')": 30.0
+    },
+    "stream": {
+      "('R1', '10:00')": 50.0,
+      "('R2', '10:01')": 30.0
+    },
+    "equal": true
+  },
+  "adversarial": {
+    "batch": {
+      "('R1', '10:00')": 72.0,
+      "('R2', '10:00')": 20.0
+    },
+    "stream": {
+      "('R1', '10:00')": 50.0,
+      "('R2', '10:00')": 20.0
+    },
+    "dropped": [
+      [
+        "a4",
+        "late beyond watermark"
+      ],
+      [
+        "a4",
+        "duplicate"
+      ],
+      [
+        "a5",
+        "late beyond watermark"
+      ]
+    ],
+    "first_divergence": "a4 is the first duplicate/out-of-order design trigger; a5 is subsequently late relative to the watermark",
+    "relaxed_watermark_stream": {
+      "('R1', '10:00')": 70.0,
+      "('R2', '10:00')": 20.0
+    },
+    "relaxed_dropped": [
+      [
+        "a4",
+        "duplicate"
+      ]
+    ],
+    "equal_after_change": false
+  },
+  "comparison": {
+    "batch_mode": "finite file scan; full result after file completion",
+    "stream_mode": "incremental state; provisional windows; watermark closes old windows",
+    "restart": "checkpointed keyed state restores exact sums/counts; stateless restart loses prior window state",
+    "latency_target": "sub-2-second alert requires short processing trigger and 10-second watermark; late corrections beyond watermark are accepted as loss"
+  },
+  "measurement": {
+    "normal_batch_seconds": 1832.1832,
+    "throughput": "events processed / elapsed seconds reported by run_task2.py"
+  }
+}

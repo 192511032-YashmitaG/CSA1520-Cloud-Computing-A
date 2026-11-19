@@ -1,0 +1,254 @@
+{
+  "part1_eight_event_flags": {
+    "AC9": {
+      "beneficiaries": [
+        "B101",
+        "B102",
+        "B104"
+      ],
+      "days": [
+        1,
+        2,
+        3
+      ]
+    }
+  },
+  "twenty_event_validation": {
+    "hand_checked_flags": {
+      "AC1": {
+        "beneficiaries": [
+          "BEN00",
+          "BEN01",
+          "BEN02",
+          "BEN03",
+          "BEN04",
+          "BEN05",
+          "BEN06"
+        ],
+        "days": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "AC2": {
+        "beneficiaries": [
+          "BEN01",
+          "BEN02",
+          "BEN05"
+        ],
+        "days": [
+          5,
+          7,
+          9
+        ]
+      },
+      "AC3": {
+        "beneficiaries": [
+          "BEN02",
+          "BEN03",
+          "BEN06"
+        ],
+        "days": [
+          5,
+          7,
+          9
+        ]
+      },
+      "AC4": {
+        "beneficiaries": [
+          "BEN00",
+          "BEN03",
+          "BEN04"
+        ],
+        "days": [
+          6,
+          8,
+          10
+        ]
+      },
+      "AC5": {
+        "beneficiaries": [
+          "BEN01",
+          "BEN04",
+          "BEN05"
+        ],
+        "days": [
+          6,
+          8,
+          10
+        ]
+      }
+    },
+    "naive_flags": {
+      "AC1": {
+        "beneficiaries": [
+          "BEN00",
+          "BEN01",
+          "BEN02",
+          "BEN03",
+          "BEN04",
+          "BEN05",
+          "BEN06"
+        ],
+        "days": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "AC2": {
+        "beneficiaries": [
+          "BEN01",
+          "BEN02",
+          "BEN05"
+        ],
+        "days": [
+          5,
+          7,
+          9
+        ]
+      },
+      "AC3": {
+        "beneficiaries": [
+          "BEN02",
+          "BEN03",
+          "BEN06"
+        ],
+        "days": [
+          5,
+          7,
+          9
+        ]
+      },
+      "AC4": {
+        "beneficiaries": [
+          "BEN00",
+          "BEN03",
+          "BEN04"
+        ],
+        "days": [
+          6,
+          8,
+          10
+        ]
+      },
+      "AC5": {
+        "beneficiaries": [
+          "BEN01",
+          "BEN04",
+          "BEN05"
+        ],
+        "days": [
+          6,
+          8,
+          10
+        ]
+      }
+    },
+    "keyed_flags": {
+      "AC1": {
+        "beneficiaries": [
+          "BEN00",
+          "BEN01",
+          "BEN02",
+          "BEN03",
+          "BEN04",
+          "BEN05",
+          "BEN06"
+        ],
+        "days": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "AC2": {
+        "beneficiaries": [
+          "BEN01",
+          "BEN02",
+          "BEN05"
+        ],
+        "days": [
+          5,
+          7,
+          9
+        ]
+      },
+      "AC3": {
+        "beneficiaries": [
+          "BEN02",
+          "BEN03",
+          "BEN06"
+        ],
+        "days": [
+          5,
+          7,
+          9
+        ]
+      },
+      "AC4": {
+        "beneficiaries": [
+          "BEN00",
+          "BEN03",
+          "BEN04"
+        ],
+        "days": [
+          6,
+          8,
+          10
+        ]
+      },
+      "AC5": {
+        "beneficiaries": [
+          "BEN01",
+          "BEN04",
+          "BEN05"
+        ],
+        "days": [
+          6,
+          8,
+          10
+        ]
+      }
+    },
+    "naive_pairwise_comparisons": 400,
+    "all_agree": true
+  },
+  "growth": [
+    {
+      "events": 10000,
+      "keyed_records_processed": 10000,
+      "keyed_seconds": 0.0206,
+      "naive_pairwise_comparisons": "not run at this size; n\u00b2 extrapolation",
+      "naive_comparisons_extrapolated": 100000000,
+      "memory_observation": "per-account window state; 10000 account keys",
+      "naive_measured_subset": {
+        "events": 1500,
+        "comparisons": 2250000
+      }
+    },
+    {
+      "events": 100000,
+      "keyed_records_processed": 100000,
+      "keyed_seconds": 0.1176,
+      "naive_pairwise_comparisons": "not run at this size; n\u00b2 extrapolation",
+      "naive_comparisons_extrapolated": 10000000000,
+      "memory_observation": "per-account window state; 10000 account keys"
+    },
+    {
+      "events": 1000000,
+      "keyed_records_processed": 1000000,
+      "keyed_seconds": 6.9185,
+      "naive_pairwise_comparisons": "not run at this size; n\u00b2 extrapolation",
+      "naive_comparisons_extrapolated": 1000000000000,
+      "memory_observation": "per-account window state; 10000 account keys"
+    }
+  ],
+  "state_definition": "Per account, retain event-time ordered (beneficiary, day, event_id) entries for trailing inclusive 7-day interval; remove entries where day < current_day-6; count distinct beneficiaries; flag at >=3.",
+  "scale_design": "Partition stream state by account key within each data-residency region; process local identifiers locally; export only approved aggregate alert statistics. Consider approximate distinct sketches only if false-positive/false-negative bounds are acceptable; hot-account skew needs salting or dedicated state shards.",
+  "reflection": "Adding machines helps only when work can be partitioned. The keyed detector reduces repeated cross-account comparisons, but one highly active account remains a hot key, state and shuffle still grow, and coordination or I/O can dominate. Our 10k\u20131m keyed runs show linear input processing, while the naive method requires n\u00b2 comparisons (100 million at 10k and 10^12 at 1m). More workers cannot remove a serial bottleneck or data skew; partitioning, state bounds and locality must be designed first."
+}

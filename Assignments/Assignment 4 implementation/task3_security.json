@@ -1,0 +1,66 @@
+{
+  "records": 1500,
+  "auxiliary_records": 600,
+  "roles": {
+    "fraud_analyst_columns": [
+      "Name",
+      "ID_Number",
+      "PIN_Code",
+      "Date_of_Birth",
+      "Gender",
+      "Scheme",
+      "Amount"
+    ],
+    "researcher_columns": [
+      "PIN_Code",
+      "Date_of_Birth",
+      "Gender",
+      "Scheme",
+      "Amount"
+    ],
+    "audit_chain_valid": true,
+    "audit_entries": [
+      {
+        "role": "fraud_analyst",
+        "action": "SELECT_IDENTIFIED_VIEW",
+        "timestamp": "2026-11-19T10:00:00Z",
+        "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "hash": "aa919df4e445048c9fb65049ab57528b6db54426724742fed120409644245b6b"
+      },
+      {
+        "role": "researcher",
+        "action": "SELECT_DEIDENTIFIED_VIEW",
+        "timestamp": "2026-11-19T10:00:00Z",
+        "previous_hash": "aa919df4e445048c9fb65049ab57528b6db54426724742fed120409644245b6b",
+        "hash": "58df59c206c06993491d4660e8872ea842967e39b3d5eb6626b81de611fff8b2"
+      }
+    ]
+  },
+  "linkage": {
+    "prediction": "approximately 600 matching identities because auxiliary data is a 600-person subset with exact quasi-identifiers",
+    "actual_reidentified_rows": 600,
+    "unique_people": 600
+  },
+  "repair": {
+    "generalization": "PIN prefix (2 digits), age band (10 years), Gender",
+    "k_minimum": 77,
+    "singleton_groups": 0,
+    "records_in_groups_k_ge_2": 1500,
+    "amount_sum_before": 11693229.0,
+    "amount_sum_after_group_aggregation": 11693229.0,
+    "aggregate_total_preserved": true
+  },
+  "encryption": {
+    "algorithm": "AES-256-GCM",
+    "fields_encrypted": "ID_Number",
+    "records": 1500,
+    "total_seconds": 0.0015,
+    "mean_microseconds_per_record": 1.01
+  },
+  "integrity": {
+    "algorithm": "SHA-256 file digest",
+    "original_digest": "e1bb4ca767d6d22dbd8ed32b61362391d3b74f140636a6b7940c7931c375cf74",
+    "tampered_digest": "1a748c2a408b97f322df6ecbecb5bb8791524168cd2d2dfed973a471c799dc71",
+    "alteration_detected": true
+  }
+}

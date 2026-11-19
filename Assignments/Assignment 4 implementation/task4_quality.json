@@ -1,0 +1,136 @@
+{
+  "input_records": 8,
+  "kept": 3,
+  "quarantined": 5,
+  "quarantine": [
+    {
+      "line": 2,
+      "reason": "DUPLICATE_EVENT_ID",
+      "event_id": "e1",
+      "sensor": "S1",
+      "segment": "R1",
+      "speed_kmh": 42,
+      "event_time": "2026-10-01T10:00:00Z"
+    },
+    {
+      "line": 3,
+      "reason": "MISSING_SPEED",
+      "event_id": "e2",
+      "sensor": "S2",
+      "segment": "R1",
+      "speed_kmh": null,
+      "event_time": "2026-10-01T10:00:05Z"
+    },
+    {
+      "line": 4,
+      "reason": "SPEED_OUT_OF_RANGE",
+      "event_id": "e3",
+      "sensor": "S3",
+      "segment": "R2",
+      "speed_kmh": -8,
+      "event_time": "2026-10-01T10:00:10Z"
+    },
+    {
+      "line": 5,
+      "reason": "MALFORMED_EVENT_TIME",
+      "event_id": "e4",
+      "sensor": "S4",
+      "segment": "R2",
+      "speed_kmh": 55,
+      "event_time": "bad-time"
+    },
+    {
+      "line": 7,
+      "reason": "SPEED_OUT_OF_RANGE",
+      "event_id": "e6",
+      "sensor": "S6",
+      "segment": "R3",
+      "speed_kmh": 250,
+      "event_time": "2026-10-01T10:00:20Z"
+    }
+  ],
+  "decisions": [
+    {
+      "line": 1,
+      "event_id": "e1",
+      "decision": "KEEP",
+      "rule": "VALID_RECORD",
+      "reason": "schema, speed and timestamp valid"
+    },
+    {
+      "line": 2,
+      "event_id": "e1",
+      "decision": "REJECT",
+      "rule": "DUPLICATE_EVENT_ID",
+      "reason": "DUPLICATE_EVENT_ID"
+    },
+    {
+      "line": 3,
+      "event_id": "e2",
+      "decision": "REJECT",
+      "rule": "MISSING_SPEED",
+      "reason": "MISSING_SPEED"
+    },
+    {
+      "line": 4,
+      "event_id": "e3",
+      "decision": "REJECT",
+      "rule": "SPEED_OUT_OF_RANGE",
+      "reason": "SPEED_OUT_OF_RANGE"
+    },
+    {
+      "line": 5,
+      "event_id": "e4",
+      "decision": "REJECT",
+      "rule": "MALFORMED_EVENT_TIME",
+      "reason": "MALFORMED_EVENT_TIME"
+    },
+    {
+      "line": 6,
+      "event_id": "e5",
+      "decision": "KEEP",
+      "rule": "VALID_RECORD",
+      "reason": "schema, speed and timestamp valid"
+    },
+    {
+      "line": 7,
+      "event_id": "e6",
+      "decision": "REJECT",
+      "rule": "SPEED_OUT_OF_RANGE",
+      "reason": "SPEED_OUT_OF_RANGE"
+    },
+    {
+      "line": 8,
+      "event_id": "e7",
+      "decision": "KEEP",
+      "rule": "VALID_RECORD",
+      "reason": "schema, speed and timestamp valid"
+    }
+  ],
+  "rule_counts": {
+    "VALID_RECORD": 3,
+    "SPEED_OUT_OF_RANGE": 2,
+    "DUPLICATE_EVENT_ID": 1,
+    "MISSING_SPEED": 1,
+    "MALFORMED_EVENT_TIME": 1
+  },
+  "duplicate_stress": {
+    "input_records": 28,
+    "kept": 3,
+    "quarantined": 25,
+    "prediction": "higher duplicate fraction reduces accepted records; duplicate-check cost increases modestly; shuffle volume falls because fewer unique rows reach aggregation",
+    "observed_rule_counts": {
+      "DUPLICATE_EVENT_ID": 11,
+      "SPEED_OUT_OF_RANGE": 7,
+      "MISSING_SPEED": 6,
+      "MALFORMED_EVENT_TIME": 1
+    }
+  },
+  "schema_drift": {
+    "injected_unit": "m/s",
+    "extra_field": "unit",
+    "detected": true,
+    "failure_if_undetected": "20 m/s would be interpreted as 20 km/h, under-reporting speed by factor 3.6",
+    "action": "reject/quarantine unknown schema version; require explicit unit conversion and versioned contract"
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "dataset_rows": 5000000,
+  "write_seconds": {
+    "csv": 4.15,
+    "columnar_npz": 8.25,
+    "sqlite_bulk_load_and_index": 19.34
+  },
+  "storage_bytes": {
+    "csv": 106857807,
+    "columnar_npz": 41065454,
+    "sqlite": 233639936
+  },
+  "models": {
+    "CSV": {
+      "Q1_sensor_day": {
+        "result_rows_or_count": 15,
+        "timing": {
+          "runs_seconds": [
+            1.0969,
+            1.0763,
+            1.0327
+          ],
+          "mean_seconds": 1.0686,
+          "stdev_seconds": 0.0328
+        },
+        "estimated_bytes_scanned": 106857807
+      },
+      "Q2_week_segment_average": {
+        "result_rows_or_count": 500,
+        "timing": {
+          "runs_seconds": [
+            1.1197,
+            1.109,
+            1.2227
+          ],
+          "mean_seconds": 1.1505,
+          "stdev_seconds": 0.0628
+        },
+        "estimated_bytes_scanned": 106857807
+      }
+    },
+    "Columnar_NPZ": {
+      "Q1_sensor_day": {
+        "result_rows_or_count": 15,
+        "timing": {
+          "runs_seconds": [
+            0.1189,
+            0.1238,
+            0.1178
+          ],
+          "mean_seconds": 0.1201,
+          "stdev_seconds": 0.0032
+        },
+        "estimated_bytes_scanned": 41065454
+      },
+      "Q2_week_segment_average": {
+        "result_rows_or_count": 500,
+        "timing": {
+          "runs_seconds": [
+            0.1014,
+            0.0934,
+            0.0921
+          ],
+          "mean_seconds": 0.0957,
+          "stdev_seconds": 0.005
+        },
+        "estimated_bytes_scanned": 41065454
+      }
+    },
+    "SQLite": {
+      "Q1_sensor_day": {
+        "result_rows_or_count": 15,
+        "timing": {
+          "runs_seconds": [
+            0.0006,
+            0.0,
+            0.0
+          ],
+          "mean_seconds": 0.0002,
+          "stdev_seconds": 0.0003
+        },
+        "estimated_bytes_scanned": 233639
+      },
+      "Q2_week_segment_average": {
+        "result_rows_or_count": 500,
+        "timing": {
+          "runs_seconds": [
+            2.3656,
+            2.342,
+            2.2212
+          ],
+          "mean_seconds": 2.3096,
+          "stdev_seconds": 0.0775
+        },
+        "estimated_bytes_scanned": 116819968
+      }
+    }
+  },
+  "Q3_insert_load": {
+    "CSV": "append-only sequential writes; low coordination, no index maintenance",
+    "Columnar_NPZ": "requires rewriting/compacting column arrays; not ideal for continuous inserts",
+    "SQLite": "transactional inserts with index maintenance; robust point lookups but write throughput limited by single-writer lock"
+  },
+  "stress_query": {
+    "Q2_changed": "select only segment and speed columns for days 0\u20136",
+    "prediction": "columnar NPZ reads only required arrays; CSV still parses rows/columns; SQLite covering/index strategy can reduce table reads",
+    "observed": "NPZ implementation accesses segment/day/speed arrays only; CSV parser scans full rows; SQLite uses day_segment index"
+  },
+  "Q3_insert_load_measured_10000": {
+    "rows": 10000,
+    "CSV_append_seconds": 0.007,
+    "NPZ_full_rewrite_seconds": 9.1741,
+    "SQLite_transactional_insert_seconds": 0.5577,
+    "interpretation": "CSV append is sequential and avoids index maintenance; NPZ rewrites the complete columnar archive; SQLite maintains indexes transactionally."
+  }
+}
